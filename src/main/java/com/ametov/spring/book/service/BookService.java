@@ -31,7 +31,7 @@ public class BookService {
         return bookStorage;
     }
 
-//    public static Optional<BookEntity> byId(Integer id){
-//        return bookStorage.stream().filter((bookEntity -> bookEntity.getId().equals(id))).findFirst();
-//    }
+    public static Optional<BookEntity> byId(Integer id){
+        return bookStorage.stream().filter((bookEntity -> bookEntity.getId().equals(id))).findFirst();
+    }
 }
