@@ -1,10 +1,9 @@
 package com.ametov.spring.book.controller;
 
+import com.ametov.spring.base.exception.ResourceNotFoundException;
 import com.ametov.spring.book.entity.BookEntity;
 import com.ametov.spring.book.service.BookService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +27,12 @@ public class BookApiController {
     }
 
     @GetMapping("/api/v1/book/{id}")
-    public Optional<BookEntity> byId(@PathVariable Integer id){
-        return BookService.byId(id);
+    public BookEntity byId(@PathVariable Integer id){
+        return BookService.byId(id).orElseThrow(ResourceNotFoundException::new);
+    }
+
+    @PostMapping("/api/v1/book")
+    public BookEntity create(@RequestBody BookEntity request){
+        return bookService.create(request.getTitle(), request.getDescription());
     }
 }
