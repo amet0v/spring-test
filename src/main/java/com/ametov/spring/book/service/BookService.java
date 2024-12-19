@@ -3,11 +3,7 @@ package com.ametov.spring.book.service;
 import com.ametov.spring.book.entity.BookEntity;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Book;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class BookService {
@@ -63,5 +59,18 @@ public class BookService {
         }
         bookStorage.remove(book.get());
         return true;
+    }
+
+    public Optional<BookEntity> patch(Integer id, Map<String, String> fields){
+        Optional<BookEntity> optionalBook = byId(id);
+        if (optionalBook.isEmpty()) return Optional.empty();
+        BookEntity book = optionalBook.get();
+        for(String key: fields.keySet()){
+            switch (key){
+                case "title" -> book.setTitle(fields.get(key));
+                case "description" -> book.setDescription(fields.get(key));
+            }
+        }
+        return Optional.of(book);
     }
 }
